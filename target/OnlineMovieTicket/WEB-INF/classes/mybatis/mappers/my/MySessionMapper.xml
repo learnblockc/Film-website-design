@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjq.programmer.dao.my.MySessionMapper">
+
+    <select id="getSessionListByDate" resultType="com.yjq.programmer.domain.Session">
+        select * from session where
+        <if test="queryMap.start != 0">
+            `time` > date_sub(curdate(), interval #{queryMap.start} day)
+        </if>
+        <if test="queryMap.start == 0">
+            `time` > now()
+        </if>
+        <if test="queryMap.end != null">
+            and time &lt; date_sub(curdate(), interval #{queryMap.end} day)
+        </if>
+        and movie_id = #{queryMap.movieId} order by `time` asc
+    </select>
+
+</mapper>

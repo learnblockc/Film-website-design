@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <property name="autoDelimitKeywords" value="true"/>
+        <!-- 字段加上引号 防止关键字冲突 -->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!--覆盖生成XML文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+        <!-- 生成的实体类添加toString()方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+
+        <!-- 不生成注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/db_online_movie_ticket"
+                        userId="root"
+                        password="">
+        </jdbcConnection>
+
+        <!-- domain类的位置 -->
+        <javaModelGenerator targetProject="src/main/java"
+                            targetPackage="com.yjq.programmer.domain"/>
+
+        <!-- mapper xml的位置 -->
+        <sqlMapGenerator targetProject="src/main/resources/mybatis"
+                         targetPackage="mappers"/>
+
+        <!-- dao 类的位置 -->
+        <javaClientGenerator targetProject="src/main/java"
+                             targetPackage="com.yjq.programmer.dao"
+                             type="XMLMAPPER" />
+
+        <!--<table tableName="user" domainObjectName="User"/>-->
+        <!--<table tableName="cinema" domainObjectName="Cinema"/>-->
+        <!--<table tableName="role" domainObjectName="Role"/>-->
+        <!--<table tableName="movie" domainObjectName="Movie"/>-->
+        <!--<table tableName="actor" domainObjectName="Actor"/>-->
+        <!--<table tableName="session" domainObjectName="Session"/>-->
+        <!--<table tableName="orders" domainObjectName="Order"/>-->
+        <!--<table tableName="order_item" domainObjectName="OrderItem"/>-->
+        <!--<table tableName="rate" domainObjectName="Rate"/>-->
+        <table tableName="comment" domainObjectName="Comment"/>
+    </context>
+</generatorConfiguration>

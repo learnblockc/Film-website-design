@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjq.programmer.dao.SessionMapper">
+  <resultMap id="BaseResultMap" type="com.yjq.programmer.domain.Session">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="cinema_id" jdbcType="CHAR" property="cinemaId" />
+    <result column="movie_id" jdbcType="CHAR" property="movieId" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="hall" jdbcType="VARCHAR" property="hall" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="row" jdbcType="INTEGER" property="row" />
+    <result column="col" jdbcType="INTEGER" property="col" />
+    <result column="total_seat" jdbcType="INTEGER" property="totalSeat" />
+    <result column="order_seat" jdbcType="INTEGER" property="orderSeat" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, cinema_id, movie_id, `time`, `language`, hall, price, `row`, col, total_seat,
+    order_seat
+  </sql>
+  <select id="selectByExample" parameterType="com.yjq.programmer.domain.SessionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from session
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from session
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yjq.programmer.domain.SessionExample">
+    delete from session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yjq.programmer.domain.Session">
+    insert into session (id, cinema_id, movie_id,
+      `time`, `language`, hall,
+      price, `row`, col, total_seat,
+      order_seat)
+    values (#{id,jdbcType=CHAR}, #{cinemaId,jdbcType=CHAR}, #{movieId,jdbcType=CHAR},
+      #{time,jdbcType=TIMESTAMP}, #{language,jdbcType=VARCHAR}, #{hall,jdbcType=VARCHAR},
+      #{price,jdbcType=DECIMAL}, #{row,jdbcType=INTEGER}, #{col,jdbcType=INTEGER}, #{totalSeat,jdbcType=INTEGER},
+      #{orderSeat,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yjq.programmer.domain.Session">
+    insert into session
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cinemaId != null">
+        cinema_id,
+      </if>
+      <if test="movieId != null">
+        movie_id,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="language != null">
+        `language`,
+      </if>
+      <if test="hall != null">
+        hall,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="row != null">
+        `row`,
+      </if>
+      <if test="col != null">
+        col,
+      </if>
+      <if test="totalSeat != null">
+        total_seat,
+      </if>
+      <if test="orderSeat != null">
+        order_seat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="cinemaId != null">
+        #{cinemaId,jdbcType=CHAR},
+      </if>
+      <if test="movieId != null">
+        #{movieId,jdbcType=CHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="hall != null">
+        #{hall,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="row != null">
+        #{row,jdbcType=INTEGER},
+      </if>
+      <if test="col != null">
+        #{col,jdbcType=INTEGER},
+      </if>
+      <if test="totalSeat != null">
+        #{totalSeat,jdbcType=INTEGER},
+      </if>
+      <if test="orderSeat != null">
+        #{orderSeat,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yjq.programmer.domain.SessionExample" resultType="java.lang.Integer">
+    select count(*) from session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update session
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.cinemaId != null">
+        cinema_id = #{record.cinemaId,jdbcType=CHAR},
+      </if>
+      <if test="record.movieId != null">
+        movie_id = #{record.movieId,jdbcType=CHAR},
+      </if>
+      <if test="record.time != null">
+        `time` = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.language != null">
+        `language` = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hall != null">
+        hall = #{record.hall,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.row != null">
+        `row` = #{record.row,jdbcType=INTEGER},
+      </if>
+      <if test="record.col != null">
+        col = #{record.col,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalSeat != null">
+        total_seat = #{record.totalSeat,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderSeat != null">
+        order_seat = #{record.orderSeat,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update session
+    set id = #{record.id,jdbcType=CHAR},
+      cinema_id = #{record.cinemaId,jdbcType=CHAR},
+      movie_id = #{record.movieId,jdbcType=CHAR},
+      `time` = #{record.time,jdbcType=TIMESTAMP},
+      `language` = #{record.language,jdbcType=VARCHAR},
+      hall = #{record.hall,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      `row` = #{record.row,jdbcType=INTEGER},
+      col = #{record.col,jdbcType=INTEGER},
+      total_seat = #{record.totalSeat,jdbcType=INTEGER},
+      order_seat = #{record.orderSeat,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yjq.programmer.domain.Session">
+    update session
+    <set>
+      <if test="cinemaId != null">
+        cinema_id = #{cinemaId,jdbcType=CHAR},
+      </if>
+      <if test="movieId != null">
+        movie_id = #{movieId,jdbcType=CHAR},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="language != null">
+        `language` = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="hall != null">
+        hall = #{hall,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="row != null">
+        `row` = #{row,jdbcType=INTEGER},
+      </if>
+      <if test="col != null">
+        col = #{col,jdbcType=INTEGER},
+      </if>
+      <if test="totalSeat != null">
+        total_seat = #{totalSeat,jdbcType=INTEGER},
+      </if>
+      <if test="orderSeat != null">
+        order_seat = #{orderSeat,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yjq.programmer.domain.Session">
+    update session
+    set cinema_id = #{cinemaId,jdbcType=CHAR},
+      movie_id = #{movieId,jdbcType=CHAR},
+      `time` = #{time,jdbcType=TIMESTAMP},
+      `language` = #{language,jdbcType=VARCHAR},
+      hall = #{hall,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      `row` = #{row,jdbcType=INTEGER},
+      col = #{col,jdbcType=INTEGER},
+      total_seat = #{totalSeat,jdbcType=INTEGER},
+      order_seat = #{orderSeat,jdbcType=INTEGER}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>
